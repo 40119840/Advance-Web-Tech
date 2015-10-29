@@ -21,6 +21,7 @@ text-align:center;
 margin-left:5%;
 border: 2px black solid;
 border-radius:25px;
+text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
 
 .menu ul
@@ -36,7 +37,6 @@ border-radius:25px;
 
 .menu ul li
 {
-text-decoration:none;
 text-align:center;
 list-style-type: none;
 margin: 25px;
@@ -44,6 +44,13 @@ padding: 25px;
 font-size:35px;
 display:inline
 }
+
+.menu a
+{
+text-decoration:none;
+}
+
+
 #searchbox
 {
 position:absolute;
@@ -63,7 +70,8 @@ color:yellow;
 
 .menu a:hover
 {
-color:black;
+color:green;
+background:yellow;
 }
 
 .main
@@ -74,7 +82,7 @@ width:90%;
 background-color: green;
 margin-left:35px;
 padding:50px;
-border:2px black solid ;
+border:2px #006400 solid ;
 border-radius:25px;
 }
 
@@ -83,28 +91,45 @@ border-radius:25px;
 text-align: left;
 }
 
-.footer
+.favPlayers
 {
 position:absolute;
-top:80%;
+top:65%;
 background-color: green;
-border: 2px yellow solid;
+border: 2px #006400 solid;
 width:90%;
 padding:50px;
 margin-left:35px;
 border-radius: 25px;
 }
 
-.footer h2
+.favPlayers h2
 {
 font-size:24px; 
+}
+
+.footer
+{
+position:absolute;
+bottom:5%;
+background-color: green;
+border: 2px #006400 solid;
+width:98.5%;
+padding:5px;
+border-radius: 25px;
+}
+
+.footer h2
+{
+font-size:15px; 
+text-align:center;
 }
 
 .players
 {
 position:absolute;
 top:20%;
-border:2px black solid;
+border:2px #006400 solid;
 width:90%;
 background:green;
 padding:30px;
@@ -122,11 +147,10 @@ font-size:24px;
 {
 position:absolute;
 top:20%;
-border:2px black solid;
-width:90%;
+border:2px #006400 solid;
+width:95.5%;
 background:green;
 padding:30px;
-margin-left:35px;
 border-radius:25px;
 }
 
@@ -139,10 +163,45 @@ font-size:24px;
 .rotate:hover {
 -webkit-transform: rotate(360deg);
 transform: rotate(360deg);
+-webkit-font-smoothing: antialiased;
 }
 .rotate {
 -webkit-transition: all 1.5s ease;
 transition: all 1.5s ease;
 position:absolute;
+-webkit-font-smoothing: antialiased;
 }
 
+
+.input{
+border-radius: 5px;
+border:black 1px solid;
+font-size:16px;
+}
+
+
+.searchButton{
+background:yellow;
+font-size:17px;
+border:black 1px solid;
+border-radius:5px;
+}
+
+.searchButton:hover{
+background:green;
+font-size:17px;
+border:black 1px solid;
+border-radius:5px;
+color:yellow;
+}
+
+
+::-webkit-scrollbar-track
+{
+  background: #BAE4FE;
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: #036;
+}

@@ -11,8 +11,8 @@
 <div id="searchbox">
 <form action="" method="post" name="form">
 <label for="Name">Search for a player:</label>
-<input type="text" name="name" id="name"/>
-<input type="submit" name="Search" id="submit"/>
+<input type="text" name="value" placeholder="Enter name here" class="input"/>
+<input type="submit" name="submit" value="Find" class="searchButton">
 </form>
 </div>     
 <div class="menu">
@@ -23,6 +23,10 @@
 </ul>
 </div>
 {% block content %} {% endblock %}
+
+<div class="footer">
+<h2> This website is a collection of my favourite players and their clubs. Designed and programmed by Adam Le Bay</h2>
+</div>
+
 </body>
- 
  </html>
