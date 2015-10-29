@@ -1,3 +1,30 @@
-body { font-family: sans-serif; background: #0000FF; }
-li ( color: black; } 
-h1 ( color: #377BA8; } 
+body {
+font-family: sans-serif;
+background: red;
+}
+
+h1 {
+position:absolute;
+color: #0000FF;
+left: 40%;
+font-family:"Times New Roman";
+}
+
+ul
+{
+list-style-type: none;
+margin: 25px;
+padding: 25px;
+text-align: center;
+top50px;
+position:absolute;
+left:40%;
+}
+
+
+ul li
+{
+display:inline
+}
+
+

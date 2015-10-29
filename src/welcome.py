@@ -4,7 +4,10 @@ app = Flask (__name__)
 @app.route("/home/")
 def home():
   return render_template('header.html')
-  
+
+@app.route("/home/players")
+def players():
+  return render_template('players.html')
 
 @app.route('/home/<name>')
 def hello(name=None):
