@@ -1,30 +1,135 @@
-body {
-font-family: sans-serif;
-background: red;
-}
-
-h1 {
-position:absolute;
-color: #0000FF;
-left: 40%;
-font-family:"Times New Roman";
-}
-
-ul
+body 
 {
+font-family: sans-serif;
+background-image:url("http://previews.123rf.com/images/deskcube/deskcube1406/deskcube140600148/29394450-Seamless-White-Black-Hexagon-Texture-Stock-Vector.jpg");
+repeat:repeat;
+}
+
+.websiteName
+{
+margin:0;
+}
+
+.websiteName h1
+{
+position:absolute;
+color: yellow;
+font-size:50px;
+width:90%;
+background-color:green;
+text-align:center;
+margin-left:5%;
+border: 2px black solid;
+border-radius:25px;
+}
+
+.menu ul
+{
+margin:25;
+position:absolute;
+left:15%;
+top:90px;
+background:green;
+border:2px black solid;
+border-radius:25px;
+}
+
+.menu ul li
+{
+text-decoration:none;
+text-align:center;
 list-style-type: none;
 margin: 25px;
 padding: 25px;
-text-align: center;
-top50px;
-position:absolute;
-left:40%;
-}
-
-
-ul li
-{
+font-size:35px;
 display:inline
 }
+#searchbox
+{
+position:absolute;
+top:7%;
+left:70%
+}
 
+#searchbox label
+{
+color:yellow;
+}
 
+.menu a
+{
+color:yellow;
+}
+
+.menu a:hover
+{
+color:black;
+}
+
+.main
+{
+position:absolute;
+top:220px;
+width:90%;
+background-color: green;
+margin-left:35px;
+padding:50px;
+border:2px black solid ;
+border-radius:25px;
+}
+
+.main p
+{
+text-align: left;
+}
+
+.footer
+{
+position:absolute;
+top:80%;
+background-color: green;
+border: 2px yellow solid;
+width:90%;
+padding:50px;
+margin-left:35px;
+border-radius: 25px;
+}
+
+.footer h2
+{
+font-size:24px; 
+}
+
+.players
+{
+position:absolute;
+top:20%;
+border:2px black solid;
+width:90%;
+background:green;
+padding:30px;
+margin-left:35px;
+border-radius:25px;
+}
+
+.players h2
+{
+font-size:24px;
+}
+
+.clubs
+{
+position:absolute;
+top:20%;
+border:2px black solid;
+width:90%;
+background:green;
+padding:30px;
+margin-left:35px;
+border-radius:25px;
+}
+
+.clubs h2
+{
+font-size:24px;
+}

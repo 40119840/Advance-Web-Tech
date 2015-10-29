@@ -1,13 +1,12 @@
 {% extends "header.html" %}
 {%block content %}
 <head>
- <style rel="stylesheet" style="text/css" href="gujh.css">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
 </head>
-<style>
-  body
-  {
-    background-color: red;
-  }
-</style>
-<p> this is where all the players will be diplayed </p>
-{%endblock %}}
+<div class="players">
+<h2>Players:</h2>
+<p>*</p>
+<p>*</p>
+<p>*</p>
+</div>
+{%endblock %}
