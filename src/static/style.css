@@ -140,11 +140,19 @@ border-radius:25px;
 .players h2
 {
 font-size:24px;
-display:inline;
 }
 
-.player p
+#playerList
 {
+height: 300px;
+-webkit-column-count: 3;
+   -moz-column-count: 3;
+        column-count: 3;
+}
+
+#playerlist li
+{
+display: inline-block;
 font-size:16px;
 }
 

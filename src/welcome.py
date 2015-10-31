@@ -1,6 +1,5 @@
-from sys import argv
-import HTMLParser 
-from flask import Flask, request, render_template
+from sys import argv 
+from flask import Flask, request, render_template, Markup
 app = Flask (__name__)
 
 @app.route("/home/")
@@ -28,7 +27,6 @@ def hello(name=None):
 def search():
     pick = []
     html = ''
-    h = HTMLParser.HTMLParser()
     empty = ''
     Data = open("static/data.txt", "r")
     txt  = Data.readline()
@@ -36,10 +34,10 @@ def search():
         txt = Data.readline()
         if txt != empty:
           pick = txt.split("@")
-          div = pick[1]
+          div = '''<li><a href="">''' + pick[1] + '''</a></li>'''
           html = html + div
     Data.close()
-    input = h.unescape(html)
+    input = Markup(html)
     return render_template('players.html',input=input)
 
 
