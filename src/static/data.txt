@@ -1,2 +1,4 @@
-lionel Messi @ barcelona @ striker
-cristiano ronaldo @ madrid @ winger
+
+1@Lionel Messi@barcelona@striker@95
+2@Cristiano Ronaldo@madrid@left winger@91
+3@Eden Hazard@Chelsea@left winger@88

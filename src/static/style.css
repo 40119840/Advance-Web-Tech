@@ -140,8 +140,13 @@ border-radius:25px;
 .players h2
 {
 font-size:24px;
+display:inline;
 }
 
+.player p
+{
+font-size:16px;
+}
 
 .clubs
 {
@@ -205,3 +210,5 @@ color:yellow;
 {
   background: #036;
 }
+
+

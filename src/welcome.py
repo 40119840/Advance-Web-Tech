@@ -1,4 +1,5 @@
 from sys import argv
+import HTMLParser 
 from flask import Flask, request, render_template
 app = Flask (__name__)
 
@@ -16,38 +17,31 @@ def clubs():
 
 @app.route("/home/tow")
 def tow():
-  return render_template ('tow.html')
+  return render_template ('tow.html',input=input)
 
 @app.route('/home/<name>')
 def hello(name=None):
     user = {'name': name}
     return render_template('Hello.html', user=user)
 
-@app.route("/search", methods={"GET","POST"})
+@app.route("/players", methods={"GET","POST"})
 def search():
-    lol = []
-    gogo = []
+    pick = []
     html = ''
+    h = HTMLParser.HTMLParser()
     empty = ''
-    mem = []
     Data = open("static/data.txt", "r")
-    txt  = myFile.reading()
+    txt  = Data.readline()
     while txt:
-        txt = myFile.readline{}
+        txt = Data.readline()
         if txt != empty:
-          lol = txt.split("@")
-          gogo =  lol[2]
-          div = '''<div class="Entity">''' + gogo + '''</div>'''
-          html = div + html
+          pick = txt.split("@")
+          div = pick[1]
+          html = html + div
     Data.close()
-    print html
-    content = Markup(html)
-    print content
-    #return content
-    return render_template('search.html',content=content)
-
+    input = h.unescape(html)
+    return render_template('players.html',input=input)
 
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0',debug=True)
-
