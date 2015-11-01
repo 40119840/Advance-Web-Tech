@@ -33,14 +33,21 @@ def hello(name=None):
     user = {'name': name}
     return render_template('Hello.html', user=user)
 
-@app.route('/club/<token>') 
-def club(token=None):
-   lala = {'token' : token}
-   #Data = open("static/data.txt", "r")
-   #txt = Data.readline()
-   if '3' in open("static/data.txt").read():
-      print "True"
-
+@app.route('/<token>') 
+def club(token):
+   pick = []
+   html = ''
+   Data = open("static/data.txt", "r")
+   txt = Data.readline()
+   while txt:
+       txt = Data.readline()
+       if token in txt:
+         pick = txt.split("@")
+         div = '''<li><a href="">''' + pick[1] + pick[2] + pick[3] + pick[4] + pick[5] + '''</a></li>'''
+         html = html + div
+   Data.close()
+   id = Markup(html)
+   return render_template('PlayerStats.html',id=id)
 
 @app.route("/players", methods={"GET","POST"})
 def players():

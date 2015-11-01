@@ -155,6 +155,18 @@ margin-left:35px;
 border-radius:25px;
 }
 
+.Stat
+{
+position:absolute;
+top:20%;
+border:2px #006400 solid;
+width:90%;
+background:green;
+padding:30px;
+margin-left:35px;
+border-radius:25px;
+}
+
 .players h2
 {
 font-size:24px;
@@ -188,7 +200,7 @@ text-decoration:None;
 font-size:35px;
 }
 
-#LAPlayers li
+li
 {
 list-style-type: none;
 }
