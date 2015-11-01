@@ -24,6 +24,10 @@ def home():
 def player():
   return render_template('players.html')
 
+@app.route("/gallery")
+def gallery():
+  return render_template('gallery.html')
+
 @app.route("/home/tow")
 def tow():
   return render_template ('tow.html',input=input)
@@ -33,27 +37,30 @@ def hello(name=None):
     user = {'name': name}
     return render_template('Hello.html', user=user)
 
-#@app.route('/club/<clubToken>')
-#def clubpage (clubToken):
-#    pick = []
-#    html = ''
-#    club = ''
-#    club = club + clubToken
-#    club = club.replace("%20"," ")  
-#    Data = open("static/data.txt", "r")
-#    txt = Data.readline()
-#    while txt:
-#        txt = Data.readline()
-#        pick = txt.split("@")
-#        if club == pick[2]:
-#        div = '''<li><a href="">''' + pick[0] + '''</a></li>'''
-#          else div = lalala
-#        html = html + div
-#    Data.close()
-#    Club = Markup(html)
-#    return render_template('clubpage.html',Club=Club)
-    
-@app.route('/<token>') 
+@app.route('/club/<clubToken>')
+def clubpage (clubToken):
+   html = ''
+   Data = open("static/data.txt", "r")
+   txt = Data.readline()
+   while txt:
+      print clubToken
+      txt = Data.readline()
+      if txt == "":
+          print "Passed!"
+          pass
+      else:
+          pick = txt.split("@")
+          print pick[2]
+          if clubToken == pick[2]:
+              print "working"
+              div = '''<li><a href="">''' + '''lol''' + '''</a></li>'''
+   Data.close()
+   html = html + div 
+   Club = Markup(html)
+   return render_template('clubs.html', Club=Club)
+
+
+@app.route('/<token>')
 def club(token):
    pick = []
    html = ''
@@ -119,4 +126,4 @@ def clubs():
 
 
 if __name__ == "__main__":
-  app.run(host='0.0.0.0',debug=True)
+  app.run(host='0.0.0.0')

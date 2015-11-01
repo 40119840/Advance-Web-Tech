@@ -1,9 +1,10 @@
 body 
 {
 font-family: sans-serif;
-background-image:url("http://previews.123rf.com/images/deskcube/deskcube1406/deskcube140600148/29394450-Seamless-White-Black-Hexagon-Texture-Stock-Vector.jpg");
+background-image:url("http://georgesrestaurant.com/wp-content/uploads/2010/07/Chalkboard.jpg");
 repeat:repeat;
 }
+
 
 .websiteName
 {
@@ -92,6 +93,18 @@ border-radius:25px;
 text-align:center;
 }
 
+.video
+{
+position:absolute;
+bottom:30%;
+width:auto;
+background-color: green;
+padding:10px;
+border:2px #006400 solid ;
+border-radius:25px;
+margin-left:55px;
+}
+
 .favPlayers h2
 {
 text-align:center;
@@ -139,7 +152,7 @@ position:absolute;
 bottom:5%;
 background-color: green;
 border: 2px #006400 solid;
-width:95.5%;
+width:98.5%;
 padding:5px;
 border-radius: 25px;
 }
