@@ -28,10 +28,6 @@ def player():
 def gallery():
   return render_template('gallery.html')
 
-@app.route("/home/tow")
-def tow():
-  return render_template ('tow.html',input=input)
-
 @app.route('/home/<name>')
 def hello(name=None):
     user = {'name': name}
@@ -53,11 +49,11 @@ def clubpage (clubToken):
           print pick[2]
           if clubToken == pick[2]:
               print "working"
-              div = '''<li><a href="">''' + '''lol''' + '''</a></li>'''
+              div = '''<li>''' + pick[6] + '''</li>'''
    Data.close()
    html = html + div 
    Club = Markup(html)
-   return render_template('clubs.html', Club=Club)
+   return render_template('clubPage.html', Club=Club)
 
 
 @app.route('/<token>')
@@ -70,16 +66,17 @@ def club(token):
        txt = Data.readline()
        pick = txt.split("@")
        if token == pick[0]:
+         # for 0 to big:
          #command to find biggest value in list pick[]  save this value in   BIGG
          #if you want to add code at beginning of snippet, place here
-         #for 0 to BIGG
+         #for 0 to BIG
          #format:  '''<li><a href="">''' + pick[BIGG] + '''</a></li>'''
 
-         div = '''<li><a href="http://localhost:5000/club/''' + pick[2] + '''">''' + pick[1] + pick[2] + pick[3] + pick[4] + pick[5] + '''</a></li>'''
-         
+         div = '''<div class=lala> <a href="http://localhost:5000/club/''' + pick[2] + '''">''' + pick[2] + '''</a>''' + pick[1] + pick[3] + pick[4] + '''</div>'''
+        
          #if you want to place code here on 1 / 2 iterations use a if
          #statement with:  if counter % 2 == 0 
-
+       #  break
 
          #end for loop
          #if you want to place code at end of snippet place here
@@ -118,7 +115,7 @@ def clubs():
         txt = Data.readline()
         if txt != empty:
           pick = txt.split("@")
-          div = '''<li><a href="http://localhost:5000/''' + pick[0] + '''">''' + pick[2] + '''</a></li>'''
+          div = '''<li><a href="http://localhost:5000/club/''' + pick[2] + '''">''' + pick[2] + '''</a></li>'''
           html = html + div
     Data.close()
     input = Markup(html)
@@ -126,4 +123,4 @@ def clubs():
 
 
 if __name__ == "__main__":
-  app.run(host='0.0.0.0')
+  app.run(host='0.0.0.0',debug=True)
