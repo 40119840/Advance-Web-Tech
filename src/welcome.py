@@ -33,6 +33,26 @@ def hello(name=None):
     user = {'name': name}
     return render_template('Hello.html', user=user)
 
+@app.route('/club/<clubToken>')
+def clubpage (clubToken):
+    pick = []
+    html = ''
+    club = ''
+    club = club + clubToken
+    club = club.replace("%20"," ")  
+    Data = open("static/data.txt", "r")
+    txt = Data.readline()
+    while txt:
+        txt = Data.readline()
+        pick = txt.split("@")
+        if club == pick[2]:
+        div = '''<li><a href="">''' + pick[0] + '''</a></li>'''
+          else div = lalala
+        html = html + div
+    Data.close()
+    Club = Markup(html)
+    return render_template('clubpage.html',Club=Club)
+    
 @app.route('/<token>') 
 def club(token):
    pick = []
@@ -41,9 +61,21 @@ def club(token):
    txt = Data.readline()
    while txt:
        txt = Data.readline()
-       if token in txt:
-         pick = txt.split("@")
-         div = '''<li><a href="">''' + pick[1] + pick[2] + pick[3] + pick[4] + pick[5] + '''</a></li>'''
+       pick = txt.split("@")
+       if token == pick[0]:
+         #command to find biggest value in list pick[]  save this value in   BIGG
+         #if you want to add code at beginning of snippet, place here
+         #for 0 to BIGG
+         #format:  '''<li><a href="">''' + pick[BIGG] + '''</a></li>'''
+
+         div = '''<li><a href="http://localhost:5000/club/''' + pick[2] + '''">''' + pick[1] + pick[2] + pick[3] + pick[4] + pick[5] + '''</a></li>'''
+         
+         #if you want to place code here on 1 / 2 iterations use a if
+         #statement with:  if counter % 2 == 0 
+
+
+         #end for loop
+         #if you want to place code at end of snippet place here
          html = html + div
    Data.close()
    id = Markup(html)
