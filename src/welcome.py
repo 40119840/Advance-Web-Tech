@@ -10,7 +10,7 @@ def home():
     x = 0
     Data = open("static/data.txt", "r")
     txt  = Data.readline()
-    for txt in range(0,6):
+    for txt in range(0,5):
         txt = Data.readline()
         if txt != empty:
           pick = txt.split("@")
@@ -33,25 +33,25 @@ def hello(name=None):
     user = {'name': name}
     return render_template('Hello.html', user=user)
 
-@app.route('/club/<clubToken>')
-def clubpage (clubToken):
-    pick = []
-    html = ''
-    club = ''
-    club = club + clubToken
-    club = club.replace("%20"," ")  
-    Data = open("static/data.txt", "r")
-    txt = Data.readline()
-    while txt:
-        txt = Data.readline()
-        pick = txt.split("@")
-        if club == pick[2]:
-        div = '''<li><a href="">''' + pick[0] + '''</a></li>'''
-          else div = lalala
-        html = html + div
-    Data.close()
-    Club = Markup(html)
-    return render_template('clubpage.html',Club=Club)
+#@app.route('/club/<clubToken>')
+#def clubpage (clubToken):
+#    pick = []
+#    html = ''
+#    club = ''
+#    club = club + clubToken
+#    club = club.replace("%20"," ")  
+#    Data = open("static/data.txt", "r")
+#    txt = Data.readline()
+#    while txt:
+#        txt = Data.readline()
+#        pick = txt.split("@")
+#        if club == pick[2]:
+#        div = '''<li><a href="">''' + pick[0] + '''</a></li>'''
+#          else div = lalala
+#        html = html + div
+#    Data.close()
+#    Club = Markup(html)
+#    return render_template('clubpage.html',Club=Club)
     
 @app.route('/<token>') 
 def club(token):

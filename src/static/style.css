@@ -79,7 +79,7 @@ background:yellow;
 {
 position:absolute;
 bottom:20%;
-width:90%;
+width:95.5%;
 background-color: green;
 margin-left:35px;
 padding:10px;
@@ -108,7 +108,7 @@ text-align:center;
 .favPlayers ul li
 {
 display:inline;
-margin-right:90px;
+margin-right:25px;
 }
 
 .favPlayers
@@ -118,7 +118,7 @@ position:absolute;
 top:20%;
 background-color: green;
 border: 2px #006400 solid;
-width:90%;
+width:95.5%;
 height:300px;
 margin-bottom:50px;
 margin-left:35px;
@@ -139,7 +139,7 @@ position:absolute;
 bottom:5%;
 background-color: green;
 border: 2px #006400 solid;
-width:98.5%;
+width:95.5%;
 padding:5px;
 border-radius: 25px;
 }
@@ -240,19 +240,6 @@ font-size:24px;
 }
 
 
-.rotate:hover {
--webkit-transform: rotate(360deg);
-transform: rotate(360deg);
--webkit-font-smoothing: antialiased;
-}
-.rotate {
--webkit-transition: all 1.5s ease;
-transition: all 1.5s ease;
-position:absolute;
--webkit-font-smoothing: antialiased;
-}
-
-
 .input{
 border-radius: 5px;
 border:black 1px solid;
@@ -275,6 +262,25 @@ border-radius:5px;
 color:yellow;
 }
 
+.rotate:hover {
+-webkit-transform: rotate(360deg);
+transform: rotate(360deg);
+-webkit-font-smoothing: antialiased;
+}
+.rotate {
+-webkit-transition: all 1.5s ease;
+transition: all 1.5s ease;
+position:absolute;
+-webkit-font-smoothing: antialiased;
+}
+
+.blog:hover {
+transform: scale(1.22);
+}
+
+.blog {
+transition: all .2s ease-in-out; 
+}
 
 ::-webkit-scrollbar-track
 {
