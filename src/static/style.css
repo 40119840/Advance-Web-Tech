@@ -51,6 +51,12 @@ display:inline
 text-decoration:none;
 }
 
+.fb
+{
+position:absolute;
+float:right;
+bottom:30px;
+}
 
 #searchbox
 {
@@ -167,7 +173,6 @@ border-radius: 25px;
 
 .Stat ul li
 {
-display:inline;
 text-align:center;
 padding-right:20px;
 margin-right:90px;
@@ -324,12 +329,12 @@ transition: all .2s ease-in-out;
 
 ::-webkit-scrollbar-track
 {
-  background: #BAE4FE;
+  background: #006400;
 }
 
 ::-webkit-scrollbar-thumb
 {
-  background: #036;
+  background: white;
 }
 
 

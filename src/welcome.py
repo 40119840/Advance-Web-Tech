@@ -20,6 +20,27 @@ def home():
     LAPlayers = Markup(html)
     return render_template('home.html',LAPlayers=LAPlayers)
 
+
+@app.route('/search/', methods=["GET"])
+def search():
+    key = request.args.get("name")
+    print key
+    html = ''
+    pick = []
+    Data = open("static/data.txt", "r")
+    txt = Data.readline()
+    while txt:
+        txt = Data.readline()
+        if txt != '':
+          pick = txt.split("@")
+          print "loop"
+          if key in pick[1]:
+            print "success"
+            div = '''<p>''' + pick[1] + '''</p>'''
+            html = html + div
+    input = Markup(html)
+    return render_template('players.html', input=input)
+
 @app.route("/home/players")
 def player():
   return render_template('players.html')
@@ -123,4 +144,4 @@ def clubs():
 
 
 if __name__ == "__main__":
-  app.run(host='0.0.0.0',debug=True)
+  app.run(host='0.0.0.0')
