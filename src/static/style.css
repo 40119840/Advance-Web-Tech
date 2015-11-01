@@ -79,7 +79,7 @@ background:yellow;
 .main
 {
 position:absolute;
-bottom:20%;
+bottom:15%;
 width:95.5%;
 background-color: green;
 margin-left:35px;
@@ -93,14 +93,10 @@ border-radius:25px;
 text-align:center;
 }
 
-
-
 .names
 {
 position:absolute;
 }
-
-
 
 .video
 {
@@ -127,11 +123,12 @@ padding-right:20px;
 text-align:center;
 }
 
-.Stat ul li
+.Pdata
 {
-display:inline;
-padding-right:20px;
-text-allign:center
+color:yellow;
+margin-left:40px;
+text-allign:center;
+font-size:40px;
 }
 
 .favPlayers ul li
@@ -144,7 +141,7 @@ padding-left:60px;
 .favPlayersnm ul li
 {
 display:inline;
-margin-right:180px;
+margin-right:130px;
 padding-left:75px;
 }
 
@@ -226,8 +223,8 @@ font-size:24px;
 {
 height: 300px;
 -webkit-column-count: 3;
-   -moz-column-count: 3;
-        column-count: 3;
+-moz-column-count: 3;
+column-count: 3;
 }
 
 #playerList li

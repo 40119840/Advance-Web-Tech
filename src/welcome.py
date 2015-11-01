@@ -72,7 +72,7 @@ def club(token):
          #for 0 to BIG
          #format:  '''<li><a href="">''' + pick[BIGG] + '''</a></li>'''
 
-         div = '''<div class=lala> <a href="http://localhost:5000/club/''' + pick[2] + '''">''' + pick[2] + '''</a>''' + pick[1] + pick[3] + pick[4] + '''</div>'''
+         div = '''<div class="Pdata"> <ul> <li> <a href="http://localhost:5000/club/''' + pick[2] + '''">''' + pick[2] + '''</a></li><li>''' + pick[1] + '''</li><li>''' + pick[3] + '''</li><li>''' + pick[4] + '''</li><li>''' + pick[5] + '''</li><li>''' + pick[7] + '''</li></div>'''
         
          #if you want to place code here on 1 / 2 iterations use a if
          #statement with:  if counter % 2 == 0 
