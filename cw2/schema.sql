@@ -7,13 +7,11 @@ DROP TABLE if EXISTS users;
      points varchar (max),
 ); 
 
-
+/*
  CREATE TABLE posts (
     idPost PRIMARY KEY autoincrement,
     idUser integer,
     text varchar(400) NOT NULL,
     FOREIGN KEY (idUser) REFERENCES user(idUser)
  ); 
-
- 
- 
+ /*
