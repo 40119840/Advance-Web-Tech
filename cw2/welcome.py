@@ -64,6 +64,43 @@ def logs(app):
     
 
 #routing
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        error = []
+        form = request.form
+        # Check if the username exists
+        ExistingUser = 'SELECT * FROM user WHERE username = ?'
+        DuplicateUser = query_db(ExistingUser, [request.form['username']])
+        if DuplicateUser:
+            error.append("Sorry, this username is not available. Please choose another one")
+        # Check if the passwords are identical
+        if request.form['password'] != request.form['confirm_password']:
+            error.append("Please enter the same password in both of the password fields")
+        # Insert in the database if everything is ok
+        if not error:
+            # Insert
+            db = get_db()
+            db.cursor().execute('INSERT INTO users (username, password,) VALUES (?,?)', [request.form['username'], request.form['password']])
+            db.commit()
+            flash('You were successfully registered. Try to log in!')
+            return render_template('login.html')
+        return render_template('createAccount.html', form=form, error=error)
+    return render_template('createAccount.html')
+
+
+
+@app.route('/display_users')
+def display_users():
+  cur = g.db.cursor()
+  #INSERT in DB
+  cur.execute('INSERT INTO user (username, password)\
+  VALUES ("test","pswd",)')
+  g.db.commit()
+  cur = g.db.execute('SELECT name_user, email_user FROM user ORDER BY id_user ASC')
+  entries = [dict(name_user=row[0], email_user=row[1]) for row in cur.fetchall()]
+  return render_template('index.html',entries=entries)
+
 @app.route("/", methods={"GET","POST"})
 def profile():
   return render_template('home.html')
