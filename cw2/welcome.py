@@ -1,7 +1,7 @@
 import sqlite3
 from sys import argv
 from flask import Flask, request, render_template
-from flask.ext.bcrypt import generate_password_hash
+
 
 app = Flask(__name__)
 db_location = 'var/data.db'
@@ -45,23 +45,13 @@ def init(app):
     app.config['password'] = config.get("config","password")
   except:
     print "Could not read configs from:", config_location
-    
-    
-def logs(app):
-  log_pathname = app.config['log_location'] + app.config['log_file']
-  file_handler = RotatingFileHandler(log_pathname, maxBytes=1024*1024*10,backupCount=1024)
-  file_handler.setLevel(app.config['log_level'])
-  formatter = logging.Formatter("%(levelname)s | %(asctime)s | %(module)s |\
-  %(funcName)s | %(message)s")
-  file_handler.setFormatter(formatter)
-  app.logger.setLevel(app.config['log_level'])
-  app.logger.addHandler(file_handler)    
-    
-    
+
+
+
 
 #routing
 @app.route('/register', methods=['GET', 'POST'])
-def register():
+def createAccount():
     if request.method == 'POST':
         error = []
         form = request.form
@@ -85,17 +75,6 @@ def register():
     return render_template('createAccount.html')
 
 
-
-@app.route('/display_users')
-def display_users():
-  cur = g.db.cursor()
-  #INSERT in DB
-  cur.execute('INSERT INTO user (username, password)\
-  VALUES ("test","pswd",)')
-  g.db.commit()
-  cur = g.db.execute('SELECT name_user, email_user FROM user ORDER BY id_user ASC')
-  entries = [dict(name_user=row[0], email_user=row[1]) for row in cur.fetchall()]
-  return render_template('index.html',entries=entries)
 
 @app.route("/", methods={"GET","POST"})
 def profile():
