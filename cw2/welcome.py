@@ -1,4 +1,4 @@
-import sqlite
+import sqlite3
 from sys import argv
 from flask import Flask, request, render_template
 from flask.ext.bcrypt import generate_password_hash
