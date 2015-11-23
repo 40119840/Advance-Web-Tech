@@ -1,7 +1,47 @@
+import sqlite
 from sys import argv
 from flask import Flask, request, render_template
-app = Flask (__name__)
+from flask.ext.bcrypt import generate_password_hash
 
+app = Flask(__name__)
+db_location = 'var/data.db'
+
+#database functions
+def get_db():
+    db = getattr(g, 'db',None )
+    if db is None:
+        db = sqlite3.connect(db_location)
+        g.db = db
+    return db
+
+@app.teardown_appcontext
+def close_db_connection(exception):
+    db = getattr(g,'db',None)
+    if db is not None:
+        db.close()
+
+def init_db():
+    with app.app_context():
+        db = get_db()
+        with app.open_ressource('schema.sql', mode='r') as f:
+            db.cursor().executescript(f.read())
+        dn.commit
+
+
+#functions
+
+def init(app):
+    config = ConfigParser.ConfigParser()
+    config_location = " etc/configuration.cfg"
+    try:
+        config.read(config_location)
+        app.config['username'] = config.get("config","username")
+        app.config['password'] = config.get("config","password")
+        app.secret_key = "secretkey "
+    except:
+     print('could not read config from' ), config_location
+
+#routing
 @app.route("/", methods={"GET","POST"})
 def profile():
   return render_template('home.html')
@@ -10,5 +50,10 @@ def profile():
 def login():
   return render_template('login.html')
 
+
+@app.route("/feed", methods={"GET","POST"})
+def feed():
+  return render_template('feed.html')
+
 if __name__ == "__main__":
-  app.run(host='0.0.0.0', debug=True)  
+  app.run(host='0.0.0.0', debug=True)

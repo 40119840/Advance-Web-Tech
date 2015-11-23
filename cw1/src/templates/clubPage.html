@@ -1,0 +1,12 @@
+{% extends "header.html" %}
+{%block content %}
+<head>
+<link rel="stylesheet" type="text/css" href={{url_for('static',filename='style.css')}}">
+</head>
+<div class="clubs">
+<h2>Club Info:<h2>
+<ul id="clubList">
+{{ Club }}
+</ul>
+</div>
+{%endblock %}
