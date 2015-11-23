@@ -28,19 +28,6 @@ def init_db():
         dn.commit
 
 
-#functions
-
-def init(app):
-    config = ConfigParser.ConfigParser()
-    config_location = " etc/configuration.cfg"
-    try:
-        config.read(config_location)
-        app.config['username'] = config.get("config","username")
-        app.config['password'] = config.get("config","password")
-        app.secret_key = "secretkey "
-    except:
-     print('could not read config from' ), config_location
-
 #routing
 @app.route("/", methods={"GET","POST"})
 def profile():
