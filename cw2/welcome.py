@@ -43,10 +43,6 @@ def init(app):
     app.config['secret_key'] = config.get("config","secret_key")
     app.config['username'] = config.get("config","username")
     app.config['password'] = config.get("config","password")
-    
-    app.config['log_file'] = config.get("logging","name")
-    app.config['log_location'] = config.get("logging","location")
-
   except:
     print "Could not read configs from:", config_location
     
