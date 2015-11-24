@@ -10,30 +10,29 @@ db_location = 'var/data.db'
 
 
 #database functions
-def get_db():
-    db = getattr(g, 'db', None)
-    if db is None:
-        db = sqlite3.connect(db_location)
-        g.db = db
-    return db
 
+def get_db():
+  if not hasattr(g, 'sqlite_db'):
+    g.sqlite_db = connect_db()
+  return g.sqlite_db    
+    
+@app.before_request
+def before_request():
+  g.db = connect_db()
+  
+  
 #def query_db(query, args=(), one=False):
 #    db = get_db()
 #    cur = db.execute(query, args)
 #    rv = [dict((cur.description[idx][0], value) for idx, value in enumerate(row)) for row in cur.fetchall()]
 #    return (rv[0] if rv else None) if one else rv    
 
-@app.teardown_appcontext
-def close_db_connection(exception):
-    db = getattr(g,'db',None)
-    if db is not None:
-        db.close()
+@app.teardown_request
+def teardown_request(exception):
+  db = getattr(g,'db', None)
+  if db is not None:
+    db.close()
 
-def init_db():
-    with closing(connect_db()) as db:
-        with app.open_resource('schema.sql', mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit
 
 def init(app):
   config = ConfigParser.ConfigParser()
@@ -53,9 +52,18 @@ def init(app):
   except:
     print "Could not read configs from:", config_location
 
+def connect_db():
+  init(app)
+  connect = sqlite3.connect(app.config['database'])
+  connect.row_factory = sqlite3.Row
+  return connect
 
-
-
+def init_db():
+  with closing(connect_db()) as db:
+    with app.open_resource('schema.sql', mode='r') as f:
+      db.cursor().executescript(f.read())
+    db.commit()
+    
 #routing
 @app.route('/register', methods=['GET', 'POST'])
 def createAccount():
