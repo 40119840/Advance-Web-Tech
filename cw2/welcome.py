@@ -1,4 +1,4 @@
-import sqlite3i
+import sqlite3
 from sys import argv
 from flask import Flask, request, render_template, g, redirect, session
 from contextlib import closing
@@ -14,13 +14,13 @@ db_location = 'var/data.db'
 def get_db():
   if not hasattr(g, 'sqlite_db'):
     g.sqlite_db = connect_db()
-  return g.sqlite_db    
-    
+  return g.sqlite_db
+
 @app.before_request
 def before_request():
   g.db = connect_db()
-  
-  
+
+
 #def query_db(query, args=(), one=False):
 #    db = get_db()
 #    cur = db.execute(query, args)
