@@ -1,37 +1,23 @@
 import sqlite3
-from sys import argv
-from flask import Flask, request, render_template, g, redirect, session
-from contextlib import closing
 import ConfigParser
+import logging
+import os
+
+from logging.handlers import RotatingFileHandler
+from flask import Flask, redirect, url_for, abort, request, render_template, \
+session, g, flash
+from contextlib import closing
 
 
 app = Flask(__name__)
-db_location = 'var/data.db'
-
 
 #database functions
-
-def get_db():
-  if not hasattr(g, 'sqlite_db'):
-    g.sqlite_db = connect_db()
-  return g.sqlite_db
-
-@app.before_request
-def before_request():
-  g.db = connect_db()
-
 
 #def query_db(query, args=(), one=False):
 #    db = get_db()
 #    cur = db.execute(query, args)
 #    rv = [dict((cur.description[idx][0], value) for idx, value in enumerate(row)) for row in cur.fetchall()]
 #    return (rv[0] if rv else None) if one else rv    
-
-@app.teardown_request
-def teardown_request(exception):
-  db = getattr(g,'db', None)
-  if db is not None:
-    db.close()
 
 
 def init(app):
@@ -63,6 +49,22 @@ def init_db():
     with app.open_resource('schema.sql', mode='r') as f:
       db.cursor().executescript(f.read())
     db.commit()
+    
+def get_db():
+  if not hasattr(g, 'sqlite_db'):
+    g.sqlite_db = connect_db()
+  return g.sqlite_db
+
+
+@app.before_request
+def before_request():
+  g.db = connect_db()
+  
+@app.teardown_request
+def teardown_request(exception):
+  db = getattr(g,'db', None)
+  if db is not None:
+    db.close()
     
 #routing
 @app.route('/register', methods=['GET', 'POST'])
