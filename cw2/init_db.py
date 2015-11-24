@@ -1,2 +1,2 @@
-from datastore import init_db
+from welcome import init_db
 init_db()

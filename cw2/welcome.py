@@ -1,6 +1,8 @@
 import sqlite3
 from sys import argv
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, g, redirect, session
+from contextlib import closing
+import ConfigParser
 
 
 app = Flask(__name__)
@@ -15,11 +17,11 @@ def get_db():
         g.db = db
     return db
 
-def query_db(query, args=(), one=False):
-    db = get_db()
-    cur = db.execute(query, args)
-    rv = [dict((cur.description[idx][0], value) for idx, value in enumerate(row)) for row in cur.fetchall()]
-    return (rv[0] if rv else None) if one else rv    
+#def query_db(query, args=(), one=False):
+#    db = get_db()
+#    cur = db.execute(query, args)
+#    rv = [dict((cur.description[idx][0], value) for idx, value in enumerate(row)) for row in cur.fetchall()]
+#    return (rv[0] if rv else None) if one else rv    
 
 @app.teardown_appcontext
 def close_db_connection(exception):
@@ -30,9 +32,9 @@ def close_db_connection(exception):
 def init_db():
     with app.app_context():
         db = get_db()
-        with app.open_ressource('schema.sql', mode='r') as f:
+        with app.open_resource('schema.sql', mode='r') as f:
             db.cursor().executescript(f.read())
-        dn.commit
+        db.commit
 
 def init(app):
   config = ConfigParser.ConfigParser()
@@ -62,10 +64,10 @@ def createAccount():
         error = []
         form = request.form
         # Check if the username exists
-        ExistingUser = 'SELECT * FROM user WHERE username = ?'
-        DuplicateUser = query_db(ExistingUser, [request.form['username']])
-        if DuplicateUser:
-            error.append("Sorry, this username is not available. Please choose another one")
+        # ExistingUser = 'SELECT * FROM user WHERE username = ?'
+        # DuplicateUser = query_db(ExistingUser, [request.form['username']])
+        # if DuplicateUser:
+        #     error.append("Sorry, this username is not available. Please choose another one")
         # Check if the passwords are identical
         if request.form['password'] != request.form['confirm_password']:
             error.append("Please enter the same password in both of the password fields")
@@ -78,7 +80,7 @@ def createAccount():
             flash('You were successfully registered. Try to log in!')
             return render_template('login.html')
         return render_template('createAccount.html', form=form, error=error)
-    return render_template('createAccount.html')
+   # return render_template('createAccount.html')
 
 
 

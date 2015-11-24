@@ -4,7 +4,7 @@ DROP TABLE if EXISTS users;
      idUser integer PRIMARY KEY autoincrement,
      username varchar(50) NOT NULL,
      password varchar(300) NOT NULL,
-     points varchar (max) DEFAULT "1",
+     points varchar (200) DEFAULT "1",
 ); 
 
 /*
