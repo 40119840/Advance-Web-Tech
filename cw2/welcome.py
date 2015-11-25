@@ -1,13 +1,9 @@
 from flask import Flask, redirect, url_for, abort, request, render_template, session, g, flash
 import sqlite3
-app = Flask(__name__)
-#database functions
-#def query_db(query, args=(), one=False):
-#    db = get_db()
-#    cur = db.execute(query, args)
-#    rv = [dict((cur.description[idx][0], value) for idx, value in enumerate(row)) for row in cur.fetchall()]
-#    return (rv[0] if rv else None) if one else rv    
 
+app = Flask(__name__)
+db_location = 'data.db'
+#database functions
 
 #def init(app):
 #  config = ConfigParser.ConfigParser()
@@ -37,7 +33,6 @@ def init_db():
     with app.app_context():
         db = get_db()
         with app.open_resource('schema.sql', mode='r') as f:
-            print f
             db.cursor().executescript(f.read())
         db.commit()
         finaly()
@@ -49,7 +44,7 @@ def get_db():
     print "getDB2"
     if db is None:
         print "getDB3"
-        db = sqlite3.connect('lol.db')
+        db = sqlite3.connect(db_location)
         db = db
     print "getDB4"
     print db
@@ -63,60 +58,91 @@ def reader():
         page.append(str(row))
     print page
 
+@app.route("/test")
 def finaly():
-    print "finaly"
+    print "finally"
     db = get_db()
-    db.cursor().execute('insert into user values ("1", "adam", "good at sql")')
+    db.cursor().execute('insert into user VALUES ("2", "adam", "good at sql")')
     db.commit()
-#@app.before_request
-#def before_request():
-#  g.db = connect_db()
 
-#@app.teardown_request
-#def teardown_request(exception):
-#  db = getattr(g,'db', None)
-#  if db is not None:
-#    db.close()
+    page=[]
+    page.append('<html><ul>')
+    sql = "SELECT rowid, * FROM user ORDER BY password"
+    for row in db.cursor().execute(sql):
+         page.append('<li>')
+         page.append(str(row))
+         page.append('<li>')
+    page.append('</ul></html>')
+    return ''.join(page)
 
-#routing
+
+@app.route('/print')
+def printi():
+    db = get_db()
+    cursor = db.cursor().execute('SELECT username,password FROM user')
+    entries = [dict(username=row[0],password=row[1]) for row in cursor.fetchall()]
+    print "working"
+    return render_template('test_db.html',entries=entries)
+
+@app.route('/add',methods=['POST'])
+def add():
+    if request.method == 'POST':
+      db = get_db()
+      db.execute('insert into user (username,password) values (?,?)',[request.form['username'],request.form['password']
+      db.commit()
+      flash('new entry added')
+      return render_template('createAccount.html')
+
+#Routing
+@app.route("/display", methods={"GET","POST"})
+def display():
+  print "running 1"
+  db = get_db()
+  print "caca 2"
+  db.cursor().execute('INSERT INTO user (username, password) VALUES ("adaeem", "daphne")')
+  print "lala 3"
+  db.commit()
+  print "sasa 4"
+  reader()
+  print "5"
+
+  page = []
+  page.append('<html><ul>')
+  print "html start"
+  sql = "SELECT rowid, * FROM user ORDER BY username"
+  print "selesct thing working"
+  for row in db.cursor().execute(sql):
+      page.append('<li>')
+      page.append(str(row))
+      page.append('</li>')
+  page.append('</ul></html>')
+  print "end html"
+  return  ''.join(page)
+
 #@app.route('/register', methods=['GET', 'POST'])
 #def createAccount():
 #    if request.method == 'POST':
-#        error = []
-#        form = request.form
-        # Check if the username exists
-        # ExistingUser = 'SELECT * FROM user WHERE username = ?'
-        # DuplicateUser = query_db(ExistingUser, [request.form['username']])
-        # if DuplicateUser:
-        #     error.append("Sorry, this username is not available. Please choose another one")
-        # Check if the passwords are identical
-#        if request.form['password'] != request.form['confirm_password']:
-#            error.append("Please enter the same password in both of the password fields")
-        # Insert in the database if everything is ok
-#        if not error:
-            # Insert
-#            db = get_db()
-#            db.cursor().execute('INSERT INTO users (username, password,) VALUES (?,?)', [request.form['username'], request.form['password']])
-#            db.commit()
-#            flash('You were successfully registered. Try to log in!')
-#            return render_template('login.html')
-#        return render_template('createAccount.html', form=form, error=error)
-   # return render_template('createAccount.html')
+#      db = get_db()
+#      db.cursor().execute('INSERT INTO user (username, password) VALUES (?,?)',[request.form['username'], request.form['password']])
+#      db.commit()
+#      flash('You were successfully registered. Try to log in!')
+#      return render_template('createAccount.html', form=form, error=error)
+#    return render_template('createAccount.html')
 
 
 
-#@app.route("/", methods={"GET","POST"})
-#def profile():
-#  return render_template('home.html')
-#
-#@app.route("/login", methods={"GET","POST"})
-#def login():
-#  return render_template('login.html')
-#
-#
-#@app.route("/feed", methods={"GET","POST"})
-#def feed():
-#  return render_template('feed.html')
+@app.route("/", methods={"GET","POST"})
+def profile():
+  return render_template('test_db.html')
+
+@app.route("/login", methods={"GET","POST"})
+def login():
+  return render_template('login.html')
+
+
+@app.route("/feed", methods={"GET","POST"})
+def feed():
+  return render_template('feed.html')
 
 if __name__ == "__main__":
-  app.run(host='0.0.0.0')
+  app.run(host='0.0.0.0',debug=True)
