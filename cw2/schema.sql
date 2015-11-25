@@ -1,11 +1,10 @@
 DROP TABLE if EXISTS user;
 
- CREATE TABLE user (
-     idUser integer PRIMARY KEY autoincrement,
-     username varchar(50) NOT NULL,
-     password varchar(300) NOT NULL,
-); 
-
+CREATE TABLE user (
+    id integer NOT NULL,
+    user text NOT NULL,
+    password text NOT NULL,
+    CONSTRAINT ID PRIMARY KEY (id));
 /*
  CREATE TABLE posts (
     idPost PRIMARY KEY autoincrement,
@@ -13,4 +12,4 @@ DROP TABLE if EXISTS user;
     text varchar(400) NOT NULL,
     FOREIGN KEY (idUser) REFERENCES user(idUser)
  ); 
- /*
+ */
