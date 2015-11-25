@@ -1,54 +1,51 @@
 from flask import Flask, redirect, url_for, abort, request, render_template, session, g, flash
 import sqlite3
+import ConfigParser
+from flask.ext.wtf import Form
+from wtforms import TextField, HiddenField
+from contextlib import closing
+from urlparse import urlparse, urljoin
 
+#app create
 app = Flask(__name__)
-db_location = 'data.db'
+db_location = 'var/data.db'
 #database functions
 
-#def init(app):
-#  config = ConfigParser.ConfigParser()
-#  config_location = "etc/configuration.cfg"
-#  try:
-#    config.read(config_location)
-#
-#    app.config['debug'] = config.get("config","debug")
-#    app.config['ip_address'] = config.get("config","ip_address")
-#    app.config['port'] = config.get("config","port")
-#    app.config['url'] = config.get("config","url")
-#
-#    app.config['database'] = config.get("config","database")
-#    app.config['secret_key'] = config.get("config","secret_key")
-#    app.config['username'] = config.get("config","username")
-#    app.config['password'] = config.get("config","password")
-#  except:
-#    print "Could not read configs from:", config_location
 
-#def connect_db():
-#  init(app)
-#  connect = sqlite3.connect(app.config['database'])
-#  connect.row_factory = sqlite3.Row
-#  return connect
+def connect_db():
+  connect = sqlite3.connect(db_location)
+  connect.row_factory = sqlite3.Row
+  return connect
+
 
 def init_db():
-    with app.app_context():
-        db = get_db()
+    with closing(connect_db()) as db:
         with app.open_resource('schema.sql', mode='r') as f:
             db.cursor().executescript(f.read())
         db.commit()
-        finaly()
-        reader()
+
+
+
 
 def get_db():
-    print "getDB1"
-    db = getattr(g, 'db', None)
-    print "getDB2"
-    if db is None:
-        print "getDB3"
-        db = sqlite3.connect(db_location)
-        db = db
-    print "getDB4"
-    print db
-    return db
+  if not hasattr(g, 'attribute'):
+    g.attribute = connect_db()
+  return g.sqlite_db
+
+@app.before_request
+def before_request():
+  g.db = connect_db()
+
+@app.teardown_request
+def teardown_request(exception):
+  db = getattr(g,'db', None)
+  if db is not None:
+    db.close
+
+
+
+##################
+
 
 def reader():
     page = []
@@ -76,25 +73,32 @@ def finaly():
     return ''.join(page)
 
 
-@app.route('/print')
-def printi():
-    db = get_db()
-    cursor = db.cursor().execute('SELECT username,password FROM user')
+#######################
+
+@app.route('/display')
+def print_users():
+    cursor = g.db.cursor()
+    cursor = g.db.execute('SELECT username,password FROM user ORDER BY id ASC')
     entries = [dict(username=row[0],password=row[1]) for row in cursor.fetchall()]
     print "working"
-    return render_template('test_db.html',entries=entries)
+    return render_template('displayUsers.html',entries=entries)
 
-@app.route('/add',methods=['POST'])
+
+
+@app.route('/add',methods=['GET','POST'])
 def add():
+    if request.method == 'GET':
+        return render_template ('createAccount.html')
     if request.method == 'POST':
       db = get_db()
-      db.execute('insert into user (username,password) values (?,?)',[request.form['username'],request.form['password']
+      #insert in db
+      db.execute('INSERT INTO user (username,password) values (?,?)',[request.form['username'],request.form['password']])
       db.commit()
       flash('new entry added')
-      return render_template('createAccount.html')
+      return render_template ('login.html')
 
-#Routing
-@app.route("/display", methods={"GET","POST"})
+#THIS IS NOT A GOOD VERSION / TEST 
+@app.route("/discplay", methods={"GET","POST"})
 def display():
   print "running 1"
   db = get_db()
@@ -110,7 +114,7 @@ def display():
   page.append('<html><ul>')
   print "html start"
   sql = "SELECT rowid, * FROM user ORDER BY username"
-  print "selesct thing working"
+  print "select thing working"
   for row in db.cursor().execute(sql):
       page.append('<li>')
       page.append(str(row))
@@ -142,7 +146,7 @@ def login():
 
 @app.route("/feed", methods={"GET","POST"})
 def feed():
-  return render_template('feed.html')
+  return render_template('createaccount.html')
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0',debug=True)
